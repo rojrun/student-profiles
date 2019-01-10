@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getAllItems} from '../actions';
+import NavButton from './nav_button';
 
 class List extends Component {
     componentDidMount() {
@@ -36,6 +37,7 @@ class List extends Component {
                     <h1>To Do List</h1>
                     <h5 className="grey-text">Now with Redux!</h5>
                 </div>
+                <NavButton color="black white-text" to="/add-item">Add Item</NavButton>
                 {this.renderList()}
             </div>
         );
