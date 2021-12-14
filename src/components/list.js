@@ -1,26 +1,32 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getAllItems} from '../actions';
+import {getAllStudents} from '../actions';
 import NavButton from './nav_button';
 
 class List extends Component {
     componentDidMount() {
-        this.props.getAllItems();
+        this.props.getAllStudents();
     }
 
-    renderList(){
-        const {todos} = this.props;
+    renderList() {
+        const {students} = this.props;
 
-        if (!todos){
+        if (!students){
             return <h1 className="center">Loading...</h1>
         }
 
-        if (!todos.length){
-            return <h5 className="center">No To Do Items</h5>;
+        if (!students.length){
+            return <h5 className="center">No Students Available.</h5>;
         }
 
-        const listElements = todos.map(item => {
-            return <li className="collection-item" key={item._id}>{item.title}</li>;
+        const listElements = students.map(item => {
+            return <li className="collection-item" key={item.id}>
+                        <h2>{item.firstName + " " + item.lastName}</h2>
+                        <p>{item.email}</p>
+                        <p>{item.company}</p>
+                        <p>{item.skill}</p>
+                        <p>{this.gradeAverage(item.grades)}</p>
+                    </li>;
         });
 
         return (
@@ -30,14 +36,18 @@ class List extends Component {
         );
     }
 
+    gradeAverage(array) {
+        const average = array => array.reduce((a,b) => a + b) / array.length;
+        return (Math.round(average * 100) / 100).toFixed(3) + "%";
+    }
+
     render(){
         return (
             <div>
                 <div className="center">
-                    <h1>To Do List</h1>
-                    <h5 className="grey-text">Now with Redux!</h5>
+                    <h1>STUDENTS</h1>
                 </div>
-                <NavButton color="black white-text" to="/add-item">Add Item</NavButton>
+                {/* <NavButton color="black white-text" to="/add-item">Add Item</NavButton> */}
                 {this.renderList()}
             </div>
         );
@@ -46,10 +56,10 @@ class List extends Component {
 
 function mapStateToProps(state){
     return {
-        todos: state.list.all
+        students: state.list.all
     }
 }
 
 export default connect(mapStateToProps, {
-    getAllItems: getAllItems
+    getAllStudents: getAllStudents
 })(List);

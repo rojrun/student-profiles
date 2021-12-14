@@ -5,11 +5,9 @@ import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import rootReducer from './reducers';
 import ourPromise from './middleware/promise';
-import logger from './middleware/logger';
-
 import App from './components/app';
 
-const store = createStore(rootReducer, {}, applyMiddleware(logger, ourPromise));
+const store = createStore(rootReducer, {}, applyMiddleware(ourPromise));
 
 ReactDOM.render(
     <Provider store={store}>

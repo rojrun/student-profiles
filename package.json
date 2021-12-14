@@ -1,7 +1,7 @@
 {
-  "name": "to_do_with_redux",
+  "name": "hatchways_assessment",
   "version": "1.0.0",
-  "description": "To do list app built the ReactJS and ReduxJS",
+  "description": "Frontend to display a list of names and details",
   "main": "index.js",
   "scripts": {
     "start": "node dev_server.js",
@@ -12,7 +12,7 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rojrun/to_do_with_redux.git"
+    "url": "https://github.com/rojrun/student-profile-3213.git"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -42,12 +42,12 @@
     "babel-loader": "^8.0.4",
     "babel-plugin-syntax-async-functions": "^6.13.0",
     "css-loader": "^1.0.0",
-    "eslint": "^5.7.0",
+    "eslint": "^8.4.1",
     "file-loader": "^2.0.0",
     "postcss-loader": "^3.0.0",
     "react-hot-loader": "^4.3.11",
     "style-loader": "^0.23.1",
-    "uglifyjs-webpack-plugin": "^2.0.1",
+    "uglifyjs-webpack-plugin": "^1.1.2",
     "webpack": "^4.21.0",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.14",

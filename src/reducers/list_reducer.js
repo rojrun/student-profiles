@@ -7,8 +7,9 @@ const DEFAULT_STATE = {
 
 export default (state = DEFAULT_STATE, action) => {
     switch(action.type){
-        case types.GET_ALL_TO_DOS:
-            return {...state, all: action.payload.data.todos};
+        case types.GET_LIST_OF_ALL_STUDENTS:
+            console.log("students: ", action.payload.data);
+            return {...state, all: action.payload.data.students};
         default:
             return state;
     }
