@@ -5,9 +5,12 @@
         "es6": true,
         "node": true
     },
+    "parser":"babel-eslint",
     "parserOptions": {
+        "ecmaVersion": 6,
         "ecmaFeatures": {
-            "jsx": true
+            "jsx": true,
+            "experimentalObjectRestSpread": true
         },
         "sourceType": "module"
     },
@@ -16,9 +19,15 @@
         "no-this-before-super": "warn",
         "no-undef": "warn",
         "no-unreachable": "warn",
-        "no-unused-vars": "warn",
+        "no-unused-vars": "off",
         "constructor-super": "warn",
         "valid-typeof": "warn",
-        "no-extra-semi": "error"
+        "no-extra-semi": "error",
+        "object-curly-newline": [
+            "error", {
+                "ObjectExpression": "always",
+                "ObjectPattern": {"multiline": false}
+            }
+        ]
     }
 }

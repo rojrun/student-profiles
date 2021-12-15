@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getAllStudents} from '../actions';
-import NavButton from './nav_button';
 
 class List extends Component {
     componentDidMount() {
@@ -20,13 +19,20 @@ class List extends Component {
         }
 
         const listElements = students.map(item => {
-            return <li className="collection-item" key={item.id}>
+            return (
+                <li className="collection-item row" key={item.id}>
+                    <div className="col s3">
+                        <img src={item.pic} alt="student avatar"/>
+                    </div>
+                    <div className="col s9">
                         <h2>{item.firstName + " " + item.lastName}</h2>
-                        <p>{item.email}</p>
-                        <p>{item.company}</p>
-                        <p>{item.skill}</p>
-                        <p>{this.gradeAverage(item.grades)}</p>
-                    </li>;
+                        <p>Email: {item.email}</p>
+                        <p>Company: {item.company}</p>
+                        <p>Skill: {item.skill}</p>
+                        <p>Average: {this.gradeAverage(item.grades)}</p>
+                    </div>
+                </li>
+            );
         });
 
         return (
@@ -35,26 +41,22 @@ class List extends Component {
             </ul>
         );
     }
-
+    
     gradeAverage(array) {
-        const average = array => array.reduce((a,b) => a + b) / array.length;
-        return (Math.round(average * 100) / 100).toFixed(3) + "%";
+        const average = eval(array.join("+"))/array.length;
+        return average + "%";
     }
-
+    
     render(){
         return (
             <div>
-                <div className="center">
-                    <h1>STUDENTS</h1>
-                </div>
-                {/* <NavButton color="black white-text" to="/add-item">Add Item</NavButton> */}
                 {this.renderList()}
             </div>
         );
     }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
         students: state.list.all
     }
