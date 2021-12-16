@@ -1,30 +1,26 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-// import {withRouter} from 'react-router-dom';
 import {Field, reduxForm} from 'redux-form';
-import {getAllStudents} from '../actions';
+import {searchByName} from '../actions';
+import {InputText} from './helpers/input_text.js';
 
 class SearchByNameForm extends Component {
-    renderInput(props) {
-        console.log("props: ", props);
-        return (
-            <div className="input-field">
-                <input {...props.input} id={props.id} type="text" placeholder="Search by name" autoComplete="off"/>
-            </div>
-        );
-    }
-
-    handleSearchName = async (values) => {
-        
+    handleSearchName =  (event) => {
+        console.log("event: ", event.currentTarget.value);
     }
 
     render() {
+        console.log("Props: ",this.props);
         const {handleSubmit, reset} = this.props;
 
         return (
-            <form onSubmit={handleSubmit(this.handleSearchName)}>
+            // <form onSubmit={handleSubmit(this.handleSearchName)}>
+            <form>
+                {/* <div className="row">
+                    <Field name="name" size="s12" component={this.renderInput} id="name" onChange={this.handleSearchName}/>
+                </div> */}
                 <div className="row">
-                    <Field name="name" size="s12" component={this.renderInput} id="name"/>
+                    <Field name="searchByName" size="s12 m8 offset-m2" component={InputText} id="searchByName" label="Search by name" onChange={this.handleSearchName}/>
                 </div>
             </form> 
         );
@@ -32,16 +28,13 @@ class SearchByNameForm extends Component {
 }
 
 function mapStateToProps(state) {
-    return {
-        students: state.list.all
-    }
+    return {}
 }
 
 SearchByNameForm = connect(mapStateToProps, {
-
-})(withRouter(SearchByNameForm));
+    searchByName: searchByName
+})(SearchByNameForm);
 
 export default reduxForm({
     form: "search-by-name-form",
-    getAllStudents: getAllStudents
 })(SearchByNameForm);

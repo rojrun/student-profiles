@@ -14,17 +14,3 @@ export default (store) => (next) => (action) => {
     });
     return action.payload;
 }
-
-// export default function(store){
-//     return function(next){
-//         return function(action){
-//          //Code goes here
-//         }
-//     }
-// }
-
-// export default store => next => action => {
-//     console.log('ACTION:', action);
-
-//     return next(action);
-// }
