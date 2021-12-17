@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const InputText = props => {
+const InputText = props => {
     return (
         <div className={`col ${props.size || 's12'}`}>
             <div className="input-field">
@@ -10,3 +10,5 @@ export const InputText = props => {
         </div>
     );
 };
+
+export default InputText;

@@ -12,12 +12,29 @@ export function getAllStudents() {
     }
 }
 
-export function searchByName(text) {
-    const resp = axios.get(BASE_URL);
+export function searchByName(text, array) {
+    const value = text.target.value;
+    console.log("value: ", value);
+    console.log("array: ", array);
+    // const copiedArray = array;
+    // console.log("copiedArray: ", copiedArray);
+    let filteredResults = array.filter(student => 
+        student.firstName.toLowerCase().includes(value) || student.lastName.toLowerCase().includes(value)
+    );
+    console.log("filteredResults: ", filteredResults);
     
+    // if (value) {
+    //     let filteredResults = array.filter(student => 
+    //         student.firstName.toLowerCase().includes(value) || student.lastName.toLowerCase().includes(value)
+    //     );
+    //     console.log("filteredResults: ", filteredResults);
+    
+    // } else {
+
+    // }
 
     return {
         type: types.SEARCH_BY_NAME,
-        payload: resp
+        payload: filteredResults
     }
 }

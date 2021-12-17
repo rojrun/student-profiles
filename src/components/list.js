@@ -57,11 +57,12 @@ class List extends Component {
 }
 
 function mapStateToProps(state) {
+    console.log("list component state: ", state.list.all);
     return {
         students: state.list.all
     }
 }
 
 export default connect(mapStateToProps, {
-    getAllStudents: getAllStudents
+    getAllStudents: getAllStudents,
 })(List);
