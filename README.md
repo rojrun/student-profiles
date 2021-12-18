@@ -1,14 +1,14 @@
-# To Do with Redux
+# Students List
 
-> To do app built with ReactJS and ReduxJS.
+> Display student details app built with ReactJS and ReduxJS.
 
 ### Setup Instructions
 
 > 1. Fork this repo
 > 1. Clone your forked copy of this repo
->    - `git clone https://github.com/rojrun/to_do_with_redux.git`
+>    - `git clone https://github.com/{username}/student-profile-3213.git students_list`
 > 1. Change directory into the newly cloned repo
->    - `cd to_do_with_redux`
+>    - `cd students_list`
 > 1. Install dependencies 
 >    - `npm install`
 > 1. Start dev server
