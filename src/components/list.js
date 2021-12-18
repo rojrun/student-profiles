@@ -7,9 +7,21 @@ class List extends Component {
         this.props.getAllStudents();
     }
 
+    handleDisplayGrades() {
+        console.log("clicked");
+    }
+
+    gradesContent() {
+        const {originalData} = this.props;
+
+        const grades = originalData.map((item, index) => {
+            return <p>Test {index}: {item.grades}</p>;
+        });
+    } 
+
     renderList() {
         const {originalData, inputFilter} = this.props;
-
+        console.log("originalData: ", originalData);
         if (!originalData){
             return <h1 className="center">Loading...</h1>
         }
@@ -34,7 +46,7 @@ class List extends Component {
                         <img src={item.pic} alt="student avatar"/>
                     </div>
                     <div className="col s9">
-                        <h2>{item.firstName + " " + item.lastName}</h2>
+                        <button type="button" className="collapsible" onClick={this.handleDisplayGrades}><p>{item.firstName + " " + item.lastName}</p></button>
                         <p>Email: {item.email}</p>
                         <p>Company: {item.company}</p>
                         <p>Skill: {item.skill}</p>
@@ -58,9 +70,9 @@ class List extends Component {
     
     render(){
         return (
-            <div>
+            <>
                 {this.renderList()}
-            </div>
+            </>
         );
     }
 }
