@@ -8,17 +8,26 @@ class List extends Component {
     }
 
     renderList() {
-        const {students} = this.props;
+        const {originalData, inputFilter} = this.props;
 
-        if (!students){
+        if (!originalData){
             return <h1 className="center">Loading...</h1>
         }
 
-        if (!students.length){
+        if (!originalData.length){
             return <h5 className="center">No Students Available.</h5>;
         }
 
-        const listElements = students.map(item => {
+        let results;
+        if (inputFilter) {
+            results = originalData.filter(student => 
+                student.firstName.toLowerCase().includes(inputFilter) || student.lastName.toLowerCase().includes(inputFilter)
+            );
+        } else {
+            results = originalData;
+        }
+        
+        const listElements = results.map(item => {
             return (
                 <li className="collection-item row" key={item.id}>
                     <div className="col s3">
@@ -57,9 +66,9 @@ class List extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log("list component state: ", state.list.all);
     return {
-        students: state.list.all
+        originalData: state.list.originalData,
+        inputFilter: state.list.inputFilter
     }
 }
 

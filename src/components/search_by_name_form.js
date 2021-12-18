@@ -6,8 +6,7 @@ import InputText from './helpers/input_text.js';
 
 class SearchByNameForm extends Component {
     handleSearchName = (value) => {
-        const {students} = this.props;
-        this.props.searchByName(value, students);
+        this.props.searchByName(value);
     }
 
     render() {
@@ -19,13 +18,7 @@ class SearchByNameForm extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        students: state.list.all
-    }
-}
-
-SearchByNameForm = connect(mapStateToProps, {
+SearchByNameForm = connect(null, {
     searchByName: searchByName,
 })(SearchByNameForm);
 
