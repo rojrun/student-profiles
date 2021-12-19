@@ -4,7 +4,7 @@ import {getAllStudents} from '../actions';
 
 class List extends Component {
     state = {
-        isOpen: false
+        isOpen: []
     }
 
     componentDidMount() {
@@ -19,12 +19,18 @@ class List extends Component {
     }
 
     handleDisplayGrades = (index) => {
-        console.log("index: ", index);
-        this.setState({isOpen: !this.state.isOpen});
-        if (this.state.isOpen) {
-            event.collapsible.style.display = "block";
+        const collapsibleElement = document.getElementsByClassName("collapsible")[0].children[index].getElementsByClassName("collapsible-body")[0];
+        if (this.state.isOpen.includes(index)) {
+            collapsibleElement.style.display= "none";
+            const arrayCopy = [...this.state.isOpen];
+            const elIndex = arrayCopy.indexOf(index);
+            if (elIndex > -1) {
+                arrayCopy.splice(elIndex, 1);
+                this.setState({isOpen: arrayCopy});
+            }
         } else {
-            event.collapsible.style.display = "none";
+            collapsibleElement.style.display = "block";
+            this.setState({isOpen: [...this.state.isOpen, index]});           
         }
     }
 
@@ -56,16 +62,16 @@ class List extends Component {
         const listElements = results.map((item, index) => {
             return (
                 <li className="collection-item" key={index}>
-                    <div className="collapsible-header row">
-                        <div className="col s3">
-                            <img src={item.pic} alt="student avatar"/>
-                        </div>
-                        <div className="col s9">
-                            <div>
+                    <section>
+                        <div className="collapsible-header row">
+                            <div className="col s3">
+                                <img src={item.pic} alt="student avatar"/>
+                            </div>
+                            <div className="col s9">
                                 <div className="row">
                                     <p className="col s9">{item.firstName + " " + item.lastName}</p>
                                     <button className="col s3" onClick={() => this.handleDisplayGrades(index)}>
-                                        {this.state.isOpen ? <span>&#8722;</span> : <span>&#43;</span>}
+                                        {this.state.isOpen.includes(index) ? <span>&#8722;</span> : <span>&#43;</span>}
                                     </button>
                                 </div>
                                 <p>Email: {item.email}</p>
@@ -74,20 +80,23 @@ class List extends Component {
                                 <p>Average: {this.gradeAverage(item.grades)}</p>
                             </div>
                         </div>
-                    </div>
-                    <div ref={(element) => this.collapsible = element} className="collapsible-body">
-                        <ul>
-                            {
-                                item.grades.map((score, index) => {
-                                    return (
-                                        <li key={index}>
-                                            <p>Test {index + 1}:&emsp;{score}%</p>
-                                        </li>
-                                    );
-                                })
-                            }
-                        </ul>
-                    </div>
+                        <div ref={(element) => this.collapsible = element} className="collapsible-body row">
+                            <div className="col s3"></div>
+                            <div className="col s9">
+                                <ul>
+                                    {
+                                        item.grades.map((score, index) => {
+                                            return (
+                                                <li key={index}>
+                                                    <p>Test {index + 1}:&emsp;{score}%</p>
+                                                </li>
+                                            );
+                                        })
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
                 </li>
             );
         });
