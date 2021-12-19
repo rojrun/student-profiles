@@ -12,7 +12,7 @@ class SearchByNameForm extends Component {
     render() {
         return (
             <div className="row">
-                <Field name="searchByName" size="s12 m8 offset-m2" component={InputText} id="searchByName" label="Search by name" onChange={this.handleSearchName}/>
+                <Field name="searchByName" size="col s12 m8 offset-m2" component={InputText} id="searchByName" label="Search by name" onChange={this.handleSearchName}/>
             </div>
         );
     }
