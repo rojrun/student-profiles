@@ -3,25 +3,39 @@ import {connect} from 'react-redux';
 import {getAllStudents} from '../actions';
 
 class List extends Component {
+    state = {
+        isOpen: false
+    }
+
     componentDidMount() {
         this.props.getAllStudents();
+        this.instance = M.Collapsible.init(this.collapsible, {accordian: false});
     }
 
-    handleDisplayGrades() {
-        console.log("clicked");
+    componentDidUpdate(prevProps) {
+        if (prevProps.originalData !== this.props.originalData.length) {
+            this.instance = M.Collapsible.init(this.collapsible);
+        }
     }
 
-    gradesContent() {
-        const {originalData} = this.props;
+    handleDisplayGrades = (index) => {
+        console.log("index: ", index);
+        this.setState({isOpen: !this.state.isOpen});
+        if (this.state.isOpen) {
+            event.collapsible.style.display = "block";
+        } else {
+            event.collapsible.style.display = "none";
+        }
+    }
 
-        const grades = originalData.map((item, index) => {
-            return <p>Test {index}: {item.grades}</p>;
-        });
-    } 
+    gradeAverage(array) {
+        const average = eval(array.join("+"))/array.length;
+        return average + "%";
+    }
 
     renderList() {
         const {originalData, inputFilter} = this.props;
-        console.log("originalData: ", originalData);
+        
         if (!originalData){
             return <h1 className="center">Loading...</h1>
         }
@@ -39,18 +53,40 @@ class List extends Component {
             results = originalData;
         }
         
-        const listElements = results.map(item => {
+        const listElements = results.map((item, index) => {
             return (
-                <li className="collection-item row" key={item.id}>
-                    <div className="col s3">
-                        <img src={item.pic} alt="student avatar"/>
+                <li className="collection-item" key={index}>
+                    <div className="collapsible-header row">
+                        <div className="col s3">
+                            <img src={item.pic} alt="student avatar"/>
+                        </div>
+                        <div className="col s9">
+                            <div>
+                                <div className="row">
+                                    <p className="col s9">{item.firstName + " " + item.lastName}</p>
+                                    <button className="col s3" onClick={() => this.handleDisplayGrades(index)}>
+                                        {this.state.isOpen ? <span>&#8722;</span> : <span>&#43;</span>}
+                                    </button>
+                                </div>
+                                <p>Email: {item.email}</p>
+                                <p>Company: {item.company}</p>
+                                <p>Skill: {item.skill}</p>
+                                <p>Average: {this.gradeAverage(item.grades)}</p>
+                            </div>
+                        </div>
                     </div>
-                    <div className="col s9">
-                        <button type="button" className="collapsible" onClick={this.handleDisplayGrades}><p>{item.firstName + " " + item.lastName}</p></button>
-                        <p>Email: {item.email}</p>
-                        <p>Company: {item.company}</p>
-                        <p>Skill: {item.skill}</p>
-                        <p>Average: {this.gradeAverage(item.grades)}</p>
+                    <div ref={(element) => this.collapsible = element} className="collapsible-body">
+                        <ul>
+                            {
+                                item.grades.map((score, index) => {
+                                    return (
+                                        <li key={index}>
+                                            <p>Test {index + 1}:&emsp;{score}%</p>
+                                        </li>
+                                    );
+                                })
+                            }
+                        </ul>
                     </div>
                 </li>
             );
@@ -58,17 +94,14 @@ class List extends Component {
 
         return (
             <ul className="collection">
-                {listElements}
+                <div className="collapsible">
+                    {listElements}
+                </div>
             </ul>
         );
     }
     
-    gradeAverage(array) {
-        const average = eval(array.join("+"))/array.length;
-        return average + "%";
-    }
-    
-    render(){
+    render() {
         return (
             <>
                 {this.renderList()}
