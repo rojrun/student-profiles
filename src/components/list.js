@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getAllStudents} from '../actions';
+import Tags from './tags';
+import AddTagForm from './add_tag_form';
 
 class List extends Component {
     state = {
@@ -40,7 +42,8 @@ class List extends Component {
     }
 
     renderList() {
-        const {originalData, inputFilter} = this.props;
+        console.log("list props: ", this.props);
+        const {originalData, inputFilter, filteredResults} = this.props;
         
         if (!originalData){
             return <h1 className="center">Loading...</h1>
@@ -96,6 +99,13 @@ class List extends Component {
                                 </ul>
                             </div>
                         </div>
+                        <div className="row">
+                            <div className="col s3"></div>    
+                            <div className="col s9">
+                                <Tags/>
+                                <AddTagForm/>       
+                            </div>       
+                        </div>
                     </section>
                 </li>
             );
@@ -120,9 +130,11 @@ class List extends Component {
 }
 
 function mapStateToProps(state) {
+    console.log("state: ", state);
     return {
         originalData: state.list.originalData,
-        inputFilter: state.list.inputFilter
+        inputFilter: state.list.inputFilter,
+        filteredResults: state.list.filteredResults
     }
 }
 
