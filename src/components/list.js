@@ -5,10 +5,14 @@ import Tags from './tags';
 import AddTagForm from './add_tag_form';
 
 class List extends Component {
-    state = {
-        isOpen: []
+    constructor(props) {
+        super(props);
+        this.state = {
+            isOpen: []
+        }
+        this.liRefs = React.createRef();
     }
-
+    
     componentDidMount() {
         this.props.getAllStudents();
         this.instance = M.Collapsible.init(this.collapsible, {accordian: false});
@@ -42,8 +46,16 @@ class List extends Component {
     }
 
     renderList() {
-        console.log("list props: ", this.props);
-        const {originalData, inputFilter, filteredResults} = this.props;
+        const {originalData, inputFilter} = this.props;
+        this.liRefs.current = [];
+
+        const addToRefs = (el) => {
+            if (el && !this.liRefs.current.includes(el)) {
+                this.liRefs.current.push(el);
+            }
+            // console.log("this.liRefs.current: ", this.liRefs.current);
+        };
+
         
         if (!originalData){
             return <h1 className="center">Loading...</h1>
@@ -64,7 +76,7 @@ class List extends Component {
         
         const listElements = results.map((item, index) => {
             return (
-                <li className="collection-item" key={index}>
+                <li className="collection-item" key={index} ref={addToRefs}>
                     <section>
                         <div className="collapsible-header row">
                             <div className="col s3">
@@ -102,8 +114,8 @@ class List extends Component {
                         <div className="row">
                             <div className="col s3"></div>    
                             <div className="col s9">
-                                <Tags/>
-                                <AddTagForm/>       
+                                <Tags />
+                                <AddTagForm tag={this.liRefs.current}/>       
                             </div>       
                         </div>
                     </section>
@@ -130,11 +142,10 @@ class List extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log("state: ", state);
+    // console.log("state: ", state);
     return {
         originalData: state.list.originalData,
-        inputFilter: state.list.inputFilter,
-        filteredResults: state.list.filteredResults
+        inputFilter: state.list.inputFilter
     }
 }
 

@@ -19,3 +19,12 @@ export function searchByName(text) {
         payload: value
     }
 }
+
+export function addTag(tag) {
+    console.log("tag: ", tag);
+
+    return {
+        type: types.ADD_TAG,
+        payload: null
+    }
+}

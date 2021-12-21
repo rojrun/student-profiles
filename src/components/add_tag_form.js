@@ -6,13 +6,20 @@ import InputText from './helpers/input_text.js';
 
 class AddTagForm extends Component {
 	handleAddTag = (value) => {
-
-	}
+        // this.props.tag.value = value;
+        // console.log("this.props.tag.value: ", this.props.tag.value);
+        // this.props.addTag(this.props.tag.value);
+    }
 
 	render() {
+        console.log("add tag form: ", this.props);
+        const {handleSubmit} = this.props;
         return (
             <div className="row">
-                <Field name="addTag" size="col s12 m8" component={InputText} id="addTag" label="Add a tag" onChange={this.handleAddTag}/>
+                <form onSubmit={handleSubmit(this.handleAddTag)} >
+                    <Field name="addTag" size="col s12 m8" component={InputText} id="addTag" label="Add a tag"/>
+                    <button type="submit">Submit</button>
+                </form>
             </div>
         );
     }

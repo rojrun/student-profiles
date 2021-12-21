@@ -8,7 +8,9 @@ class Tags extends Component {
 
 	render() {
 		return (
-			<h1>hi</h1>
+			<div>
+				
+			</div>
 		);
 	}
 }
