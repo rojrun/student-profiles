@@ -13,8 +13,24 @@ export default (state = DEFAULT_STATE, action) => {
         case types.SEARCH_BY_NAME:
             return {...state, inputFilter: action.payload, results: action.payload};    
         case types.ADD_TAG:
-            console.log('reducer state: ', state);
-            console.log("action: ", action);
+            console.log("state: ", state);
+            console.log("action: ", action.payload);
+            const index = action.payload[0];
+            const tag = action.payload[1];
+            if (state.tags === null) {
+                state.tags = [];
+                const tagObj = {};
+                tagObj.index = index;
+                tagObj.tags = [];
+                tagObj.tags.push(tag);
+                state.tags.push(tagObj);
+                console.log("state.tags: ", state.tags);
+            } else {
+                const indexExists = state.tags.some(element => element.index === index);
+                if (indexExists) {
+                    
+                }
+            }
             return {...state};    
         default:
             return state;

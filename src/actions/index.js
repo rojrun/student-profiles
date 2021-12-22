@@ -20,11 +20,11 @@ export function searchByName(text) {
     }
 }
 
-export function addTag(tag) {
-    console.log("tag: ", tag);
-
+export function addTag(index, tag) {
+    const indexAndTag = [];
+    indexAndTag.push(index, tag);
     return {
         type: types.ADD_TAG,
-        payload: null
+        payload: indexAndTag
     }
 }

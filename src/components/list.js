@@ -47,13 +47,12 @@ class List extends Component {
 
     renderList() {
         const {originalData, inputFilter} = this.props;
-        this.liRefs.current = [];
 
+        this.liRefs.current = [];
         const addToRefs = (el) => {
             if (el && !this.liRefs.current.includes(el)) {
                 this.liRefs.current.push(el);
             }
-            // console.log("this.liRefs.current: ", this.liRefs.current);
         };
 
         
@@ -115,7 +114,7 @@ class List extends Component {
                             <div className="col s3"></div>    
                             <div className="col s9">
                                 <Tags />
-                                <AddTagForm tag={this.liRefs.current}/>       
+                                <AddTagForm tagInput={this.liRefs} liIndex={index}/>       
                             </div>       
                         </div>
                     </section>
@@ -142,7 +141,6 @@ class List extends Component {
 }
 
 function mapStateToProps(state) {
-    // console.log("state: ", state);
     return {
         originalData: state.list.originalData,
         inputFilter: state.list.inputFilter

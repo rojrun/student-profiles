@@ -5,19 +5,20 @@ import {addTag} from '../actions';
 import InputText from './helpers/input_text.js';
 
 class AddTagForm extends Component {
-	handleAddTag = (value) => {
-        // this.props.tag.value = value;
-        // console.log("this.props.tag.value: ", this.props.tag.value);
-        // this.props.addTag(this.props.tag.value);
+    handleAddTag = (el, index) => {
+        const tagInput = el['addTag' + index.toString()];
+        this.props.addTag(index, tagInput);
+        this.props.reset();
+        // this.props.untouch();   
     }
 
 	render() {
-        console.log("add tag form: ", this.props);
-        const {handleSubmit} = this.props;
+        const {handleSubmit, liIndex} = this.props;
+        
         return (
             <div className="row">
-                <form onSubmit={handleSubmit(this.handleAddTag)} >
-                    <Field name="addTag" size="col s12 m8" component={InputText} id="addTag" label="Add a tag"/>
+                <form onSubmit={handleSubmit((evt) => this.handleAddTag(evt, liIndex))} >
+                    <Field name={`addTag${liIndex}`} size="col s12 m8" component={InputText} id={`addTag${liIndex}`} label="Add a tag"/>
                     <button type="submit">Submit</button>
                 </form>
             </div>
