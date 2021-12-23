@@ -7,6 +7,7 @@ const InputText = props => {
                 <input {...props.input} id={props.id} type="text" autoComplete="off"/>
                 <label htmlFor={props.id}>{props.label}</label>
             </div>
+            <p className="red-text text-darken-2">{props.warning}</p>
         </div>
     );
 };

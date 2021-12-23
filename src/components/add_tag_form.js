@@ -13,20 +13,26 @@ class AddTagForm extends Component {
     }
 
 	render() {
-        const {handleSubmit, liIndex} = this.props;
-        
+        const {handleSubmit, liIndex, tagExistsWarning} = this.props;
+        // console.log("tagExistsWarning: " , tagExistsWarning);
         return (
             <div className="row">
                 <form onSubmit={handleSubmit((evt) => this.handleAddTag(evt, liIndex))} >
-                    <Field name={`addTag${liIndex}`} size="col s12 m8" component={InputText} id={`addTag${liIndex}`} label="Add a tag"/>
-                    <button type="submit">Submit</button>
+                    <Field name={`addTag${liIndex}`} label="Add a tag" size="col s12 m8" component={InputText} 
+                        id={`addTag${liIndex}`} warning={tagExistsWarning ? tagExistsWarning[1] : ""} />
                 </form>
             </div>
         );
     }
 }
 
-AddTagForm = connect(null, {
+function mapStateToProps(state) {
+    return {
+        tagExistsWarning: state.list.tagExistsWarning
+    }
+}
+
+AddTagForm = connect(mapStateToProps, {
     addTag: addTag,
 })(AddTagForm);
 

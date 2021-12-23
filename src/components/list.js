@@ -46,7 +46,7 @@ class List extends Component {
     }
 
     renderList() {
-        const {originalData, inputFilter} = this.props;
+        const {originalData, nameFilter} = this.props;
 
         this.liRefs.current = [];
         const addToRefs = (el) => {
@@ -65,9 +65,9 @@ class List extends Component {
         }
 
         let results;
-        if (inputFilter) {
+        if (nameFilter) {
             results = originalData.filter(student => 
-                student.firstName.toLowerCase().includes(inputFilter) || student.lastName.toLowerCase().includes(inputFilter)
+                student.firstName.toLowerCase().includes(nameFilter) || student.lastName.toLowerCase().includes(nameFilter)
             );
         } else {
             results = originalData;
@@ -113,7 +113,7 @@ class List extends Component {
                         <div className="row">
                             <div className="col s3"></div>    
                             <div className="col s9">
-                                <Tags />
+                                <Tags liIndex={index}/>
                                 <AddTagForm tagInput={this.liRefs} liIndex={index}/>       
                             </div>       
                         </div>
@@ -143,7 +143,7 @@ class List extends Component {
 function mapStateToProps(state) {
     return {
         originalData: state.list.originalData,
-        inputFilter: state.list.inputFilter
+        nameFilter: state.list.nameFilter
     }
 }
 
