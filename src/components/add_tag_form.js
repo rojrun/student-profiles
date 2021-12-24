@@ -5,20 +5,21 @@ import {addTag} from '../actions';
 import InputText from './helpers/input_text.js';
 
 class AddTagForm extends Component {
-    handleAddTag = (el, index) => {
-        const tagInput = el['addTag' + index.toString()];
-        this.props.addTag(index, tagInput);
+    handleAddTag = (index) => {    
+        const dom = this.props.parentDom[index].getElementsByTagName("input")[0];
+        const value = dom.value;
+        this.props.addTag(index, value);
         this.props.reset();
-        // this.props.untouch();   
+        this.props.untouch(dom);   
     }
 
 	render() {
         const {handleSubmit, liIndex, tagExistsWarning} = this.props;
-        // console.log("tagExistsWarning: " , tagExistsWarning);
+        
         return (
             <div className="row">
-                <form onSubmit={handleSubmit((evt) => this.handleAddTag(evt, liIndex))} >
-                    <Field name={`addTag${liIndex}`} label="Add a tag" size="col s12 m8" component={InputText} 
+                <form onSubmit={handleSubmit(() => this.handleAddTag(liIndex))}>
+                    <Field name={`addTag${liIndex}`} label="Add a tag" size="col s12 m8" component={InputText}
                         id={`addTag${liIndex}`} warning={tagExistsWarning ? tagExistsWarning[1] : ""} />
                 </form>
             </div>

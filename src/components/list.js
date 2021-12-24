@@ -54,7 +54,6 @@ class List extends Component {
                 this.liRefs.current.push(el);
             }
         };
-
         
         if (!originalData){
             return <h1 className="center">Loading...</h1>
@@ -113,8 +112,8 @@ class List extends Component {
                         <div className="row">
                             <div className="col s3"></div>    
                             <div className="col s9">
-                                <Tags liIndex={index}/>
-                                <AddTagForm tagInput={this.liRefs} liIndex={index}/>       
+                                <Tags parentDom={this.liRefs.current} liIndex={index}/>
+                                <AddTagForm parentDom={this.liRefs.current} liIndex={index}/>       
                             </div>       
                         </div>
                     </section>

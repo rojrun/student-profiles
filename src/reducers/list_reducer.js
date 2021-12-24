@@ -3,7 +3,7 @@ import types from '../actions/types';
 const DEFAULT_STATE = {
     originalData: null,
     nameFilter: '',
-    tags: null,
+    tagsList: null,
     tagExistsWarning: null
 };
 
@@ -22,36 +22,57 @@ export default (state = DEFAULT_STATE, action) => {
         case types.ADD_TAG:
             const index = action.payload[0];
             const tag = action.payload[1];
-            const tagObj = (ind, tg) => {
-                const obj = {};
-                obj.index = ind;
-                obj.tags = [];
-                obj.tags.push(tg);
-                return obj;
-            };
+
+            const convertTagToArray = new Array(tag);
+            console.log('convertTagToArray: ', convertTagToArray);
+
+            const tagObj = Object.assign({}, {
+                index: index,
+                tags: convertTagToArray
+            });
+            console.log("tagObj: ", tagObj);
+
+            if (state.tagsList === null) {
+                const newTagsList = new Array(tagObj);
+                console.log("newTagsList: ", newTagsList);
+            } else {
+                
+            }
+
+            // const tagObj = (ind, tg) => {
+            //     const obj = {};
+            //     obj.index = ind;
+            //     obj.tags = [];
+            //     obj.tags.push(tg);
+            //     return obj;
+            // };
+
+
 
             // Clears out state.tagExistWarning object
-            if (state.tagExistsWarning !== null) {
-                state.tagExistsWarning = null;
-            }
+            // if (state.tagExistsWarning !== null) {
+            //     state.tagExistsWarning = null;
+            // }
             
-            if (state.tags === null) {
-                state.tags = [];
-                state.tags.push(tagObj(index, tag));
-            } else {
-                const tagIndex = state.tags.findIndex(element => element.index === index);
-               if (tagIndex > -1) {
-                    if (!state.tags[tagIndex].tags.includes(tag)) {
-                        state.tags[tagIndex].tags.push(tag);
-                    } else {
-                        state.tagExistsWarning = [];
-                        state.tagExistsWarning.push(index, "'" + tag + "' already does exists. Please enter a new tag.");
-                    }      
-                } else {
-                    state.tags.push(tagObj(index, tag));
-                }
-            }
-            return {...state, tagsList: state.tags, tagExistsWarning: state.tagExistsWarning};    
+            // if (state.tagsList === null) {
+                // state.tagsList = [];
+                // state.tagsList.push(tagObj(index, tag));
+            // } else {
+                // const tagIndex = state.tagsList.findIndex(element => element.index === index);
+                // if (tagIndex > -1) {
+                //     if (!state.tagsList[tagIndex].tags.includes(tag)) {
+                //         state.tagsList[tagIndex].tags.push(tag);
+                //     } else {
+                //         state.tagExistsWarning = [];
+                //         state.tagExistsWarning.push(index, "'" + tag + "' already does exists. Please enter a new tag.");
+                //     }      
+                // } else {
+                //     state.tagsList.push(tagObj(index, tag));
+                // }
+            // }
+            
+            // return {...state, tagsList: state.tagsList, tagExistsWarning: state.tagExistsWarning};    
+            return {...state, tagsList: newTagsList};
         default:
             return state;
     }
