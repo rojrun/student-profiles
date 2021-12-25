@@ -21,15 +21,15 @@ class Tags extends Component {
 
 	renderList() {
 		const {parentDom, tagsList, liIndex} = this.props;
-		console.log("tagsList: ", tagsList);
+		// console.log("tagsList: ", tagsList);
 		// console.log("parentDom: ", parentDom[liIndex]);
 		// console.log("tagsList", this.state.tagsList);
 		if (tagsList) {
 			const tagsIndex = tagsList.findIndex(element => element.index === liIndex);
-			console.log("tagsIndex: ", tagsIndex);
+			// console.log("tagsIndex: ", tagsIndex);
 			if (tagsIndex > -1) {
 				const tagElements = tagsList[tagsIndex].tags.map((tag, ind) => {
-					console.log("tag: ",tag);
+					// console.log("tag: ",tag);
 					return (
 						<li key={ind}>
 							<p>{tag}</p>

@@ -20,23 +20,50 @@ export default (state = DEFAULT_STATE, action) => {
             
         // Add a tag to a name. Check if tags exists for that name, make an array of objects, and add the tag to the tag array
         case types.ADD_TAG:
+            console.log("tagsList: ", state.tagsList);
             const index = action.payload[0];
             const tag = action.payload[1];
+            
+            if (state.tagsList === null) {  /* For first index and tag */    
+                const convertTagToArray = new Array(tag);
+                // console.log('convertTagToArray: ', convertTagToArray);
 
-            const convertTagToArray = new Array(tag);
-            console.log('convertTagToArray: ', convertTagToArray);
+                const tagObj = Object.assign({}, {
+                    index: index,
+                    tags: convertTagToArray
+                });
+                // console.log("tagObj: ", tagObj);
 
-            const tagObj = Object.assign({}, {
-                index: index,
-                tags: convertTagToArray
-            });
-            console.log("tagObj: ", tagObj);
-
-            if (state.tagsList === null) {
                 const newTagsList = new Array(tagObj);
-                console.log("newTagsList: ", newTagsList);
-            } else {
-                
+                // console.log("newTagsList: ", newTagsList);
+                return {...state, tagsList: newTagsList};
+
+            } else {   /* For new adding tag */ 
+                const convertTagToArray = new Array(tag);
+                console.log('convertTagToArray: ', convertTagToArray);
+
+                const copyStateTagsList = state.tagsList.map(obj => {
+                   return Object.assign({}, {
+                        index: obj.index,
+                        tags: [...obj.tags]
+                    });
+                });
+                console.log('copyStateTagsList: ', copyStateTagsList);
+
+                const objIndex = copyStateTagsList.findIndex(element => element.index === index);
+                console.log("objIndex: ", objIndex);
+
+                if (objIndex > -1) {    /* Add new tag to object with found index */
+                    const newTagArray = new Array(copyStateTagsList[objIndex].tags);
+                    console.log("newTagArray: ", newTagArray);
+                    newTagArray.concat(convertTagToArray);
+                    console.log('newTagArray: ', newTagArray);
+
+
+
+                } else {    /* Add new tag with new index */
+
+                }
             }
 
             // const tagObj = (ind, tg) => {
@@ -72,7 +99,7 @@ export default (state = DEFAULT_STATE, action) => {
             // }
             
             // return {...state, tagsList: state.tagsList, tagExistsWarning: state.tagExistsWarning};    
-            return {...state, tagsList: newTagsList};
+            // return {...state, tagsList: newTagsList};
         default:
             return state;
     }
