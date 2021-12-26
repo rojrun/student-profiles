@@ -24,20 +24,20 @@ class List extends Component {
         }
     }
 
-    handleDisplayGrades = (index) => {
-        const collapsibleElement = document.getElementsByClassName("collapsible")[0].children[index].getElementsByClassName("collapsible-body")[0];
-        if (this.state.isOpen.includes(index)) {
+    handleDisplayGrades = (data, id) => {
+        const collapsibleElement = document.getElementsByClassName("collapsible")[0].children[(data.findIndex(element => element.id === id))].getElementsByClassName("collapsible-body")[0];
+        if (this.state.isOpen.includes(id)) {
             collapsibleElement.style.display= "none";
             const arrayCopy = [...this.state.isOpen];
-            const elIndex = arrayCopy.indexOf(index);
+            const elIndex = arrayCopy.indexOf(id);
             if (elIndex > -1) {
                 arrayCopy.splice(elIndex, 1);
                 this.setState({isOpen: arrayCopy});
             }
         } else {
             collapsibleElement.style.display = "block";
-            this.setState({isOpen: [...this.state.isOpen, index]});           
-        }
+            this.setState({isOpen: [...this.state.isOpen, id]});     
+        }     
     }
 
     gradeAverage(array) {
@@ -47,13 +47,6 @@ class List extends Component {
 
     renderList() {
         const {originalData, nameFilter} = this.props;
-
-        this.liRefs.current = [];
-        const addToRefs = (el) => {
-            if (el && !this.liRefs.current.includes(el)) {
-                this.liRefs.current.push(el);
-            }
-        };
         
         if (!originalData){
             return <h1 className="center">Loading...</h1>
@@ -62,6 +55,13 @@ class List extends Component {
         if (!originalData.length){
             return <h5 className="center">No Students Available.</h5>;
         }
+
+        this.liRefs.current = [];
+        const addToRefs = (el) => {
+            if (el && !this.liRefs.current.includes(el)) {
+                this.liRefs.current.push(el);
+            }
+        };
 
         let results;
         if (nameFilter) {
@@ -72,9 +72,9 @@ class List extends Component {
             results = originalData;
         }
         
-        const listElements = results.map((item, index) => {
+        const listElements = results.map((item) => {
             return (
-                <li className="collection-item" key={index} ref={addToRefs}>
+                <li className="collection-item" key={item.id} ref={addToRefs}>
                     <section>
                         <div className="collapsible-header row">
                             <div className="col s3">
@@ -83,8 +83,8 @@ class List extends Component {
                             <div className="col s9">
                                 <div className="row">
                                     <p className="col s9">{item.firstName + " " + item.lastName}</p>
-                                    <button className="col s3" onClick={() => this.handleDisplayGrades(index)}>
-                                        {this.state.isOpen.includes(index) ? <span>&#8722;</span> : <span>&#43;</span>}
+                                    <button className="col s3" onClick={() => this.handleDisplayGrades(results, item.id)}>
+                                        {this.state.isOpen.includes(item.id) ? <span>&#8722;</span> : <span>&#43;</span>}
                                     </button>
                                 </div>
                                 <p>Email: {item.email}</p>
@@ -112,8 +112,8 @@ class List extends Component {
                         <div className="row">
                             <div className="col s3"></div>    
                             <div className="col s9">
-                                {/* <Tags parentDom={this.liRefs.current} liIndex={index}/> */}
-                                <AddTagForm parentDom={this.liRefs.current} liIndex={index}/>       
+                                <Tags parentDom={this.liRefs.current} data={results}/>
+                                <AddTagForm parentDom={this.liRefs.current} data={results} id={item.id}/>       
                             </div>       
                         </div>
                     </section>
