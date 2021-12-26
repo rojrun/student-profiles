@@ -112,7 +112,7 @@ class List extends Component {
                         <div className="row">
                             <div className="col s3"></div>    
                             <div className="col s9">
-                                <Tags parentDom={this.liRefs.current} data={results}/>
+                                <Tags parentDom={this.liRefs.current} data={results} id={item.id}/>
                                 <AddTagForm parentDom={this.liRefs.current} data={results} id={item.id}/>       
                             </div>       
                         </div>

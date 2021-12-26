@@ -10,7 +10,6 @@ class AddTagForm extends Component {
         const value = node.value;
         this.props.addTag(id, value);
         this.props.reset();
-        this.props.untouch(node);   
     }
 
 	render() {
@@ -37,5 +36,5 @@ AddTagForm = connect(mapStateToProps, {
 })(AddTagForm);
 
 export default reduxForm({
-    form: "add-tag-form",
+    form: "add-tag-form"
 })(AddTagForm);
