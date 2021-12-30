@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
 import {addTag} from '../actions';
-import InputText from './helpers/input_text.js';
+import Input from './helpers/input.js';
 
 class AddTagForm extends Component {
     handleAddTag = (id, data) => {    
@@ -17,7 +17,7 @@ class AddTagForm extends Component {
         return (
             <div className="row">
                 <form onSubmit={handleSubmit(() => this.handleAddTag(id, data))}>
-                    <Field name={`addTag${id}`} label="Add a tag" size="col s12 m8" component={InputText} liRefs={parentDom}
+                    <Field name={`addTag${id}`} label="Add a tag" size="col s12 m8" type="text" component={Input} liRefs={parentDom}
                         id={`addTag${id}`} data={data} warning={tagExistsWarning}/>
                 </form>
             </div>

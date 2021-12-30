@@ -1,25 +1,26 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
-import {searchByName} from '../actions';
-import InputText from './helpers/input_text.js';
+import {searchByFilter} from '../actions';
+import Input from './helpers/input.js';
 
 class SearchByNameForm extends Component {
     handleSearchName = (value) => {
-        this.props.searchByName(value);
+        const nameFilter = new Array("name", value);
+        this.props.searchByFilter(nameFilter);
     }
 
     render() {
         return (
             <div className="row">
-                <Field name="searchByName" size="col s12 m8 offset-m2" component={InputText} id="searchByName" label="Search by name" onChange={this.handleSearchName}/>
+                <Field name="searchByName" size="col s12 m8 offset-m2" component={Input} id="searchByName" type="text" label="Search by name" onChange={this.handleSearchName}/>
             </div>
         );
     }
 }
 
 SearchByNameForm = connect(null, {
-    searchByName: searchByName,
+    searchByFilter: searchByFilter,
 })(SearchByNameForm);
 
 export default reduxForm({

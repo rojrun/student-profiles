@@ -12,11 +12,10 @@ export function getAllStudents() {
     }
 }
 
-export function searchByName(text) {
-    const value = text.target.value;
+export function searchByFilter(filter) {
     return {
-        type: types.SEARCH_BY_NAME,
-        payload: value
+        type: types.SEARCH_BY_FILTER,
+        payload: filter
     }
 }
 

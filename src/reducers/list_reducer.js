@@ -4,7 +4,9 @@ const DEFAULT_STATE = {
     originalData: null,
     nameFilter: '',
     tagsList: null,
-    tagExistsWarning: null
+    tagExistsWarning: null,
+    tagFilter: '', 
+    results: null
 };
 
 export default (state = DEFAULT_STATE, action) => {
@@ -12,12 +14,33 @@ export default (state = DEFAULT_STATE, action) => {
 
         // Get data from api
         case types.GET_LIST_OF_ALL_STUDENTS:
-            return {...state, originalData: action.payload.data.students};
+            return {...state, originalData: action.payload.data.students, results: action.payload.data.students};
 
-        // Filter data by name    
-        case types.SEARCH_BY_NAME:
-            return {...state, nameFilter: action.payload};  
+        // Filter data by name or tag   
+        case types.SEARCH_BY_FILTER:
+            console.log("action.payload: ", action.payload);
+            let nameFilter;
+            let tagFilter;
+            if (action.payload[0] === "name") {
+                nameFilter = action.payload[1].target.value;
+            } else {
+                tagFilter = action.payload[1].target.value;
+            }
             
+            let results;
+            if (!state.nameFilter && !state.tagFilter) {
+                results = state.originalData;
+            }
+
+            // if (nameFilter) {
+            //     nameResults = state.originalData.filter(student => 
+            //         student.firstName.toLowerCase().includes(nameFilter) || student.lastName.toLowerCase().includes(nameFilter)
+            //     );
+            // } else {
+            //     nameResults = state.originalData;
+            // }
+            return {...state, nameFilter: nameFilter, tagFilter: tagFilter, results: results};  
+
         // Add a tag to a name. Check if tags exists for that name, make an array of objects, and add the tag to the tag array
         case types.ADD_TAG:
             const id = action.payload[0];

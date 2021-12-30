@@ -19,7 +19,7 @@ class List extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.originalData !== this.props.originalData.length) {
+        if (prevProps.results !== this.props.results.length) {
             this.instance = M.Collapsible.init(this.collapsible);
         }
     }
@@ -40,22 +40,8 @@ class List extends Component {
         }     
     }
 
-    gradeAverage(array) {
-        const average = eval(array.join("+"))/array.length;
-        return average + "%";
-    }
-
     renderList() {
-        const {originalData, nameFilter} = this.props;
-        
-        if (!originalData){
-            return <h1 className="center">Loading...</h1>
-        }
-
-        if (!originalData.length){
-            return <h5 className="center">No Students Available.</h5>;
-        }
-
+        const {tagsList, results} = this.props;
         this.liRefs.current = [];
         const addToRefs = (el) => {
             if (el && !this.liRefs.current.includes(el)) {
@@ -63,13 +49,12 @@ class List extends Component {
             }
         };
 
-        let results;
-        if (nameFilter) {
-            results = originalData.filter(student => 
-                student.firstName.toLowerCase().includes(nameFilter) || student.lastName.toLowerCase().includes(nameFilter)
-            );
-        } else {
-            results = originalData;
+        if (!results) {    
+            return <h1 className="center">Loading...</h1>
+        }
+
+        if (!results.length) {    
+            return <h5 className="center">No Students Available.</h5>;
         }
         
         const listElements = results.map((item) => {
@@ -90,7 +75,7 @@ class List extends Component {
                                 <p>Email: {item.email}</p>
                                 <p>Company: {item.company}</p>
                                 <p>Skill: {item.skill}</p>
-                                <p>Average: {this.gradeAverage(item.grades)}</p>
+                                <p>Average: {(eval(item.grades.join("+"))/item.grades.length) + "%"}</p>
                             </div>
                         </div>
                         <div ref={(element) => this.collapsible = element} className="collapsible-body row">
@@ -112,7 +97,16 @@ class List extends Component {
                         <div className="row">
                             <div className="col s3"></div>    
                             <div className="col s9">
-                                <Tags parentDom={this.liRefs.current} data={results}/>
+                                {(() => {
+                                    if (tagsList) {
+                                        const tags = tagsList.find(tagObj => tagObj.id === item.id);
+                                        if (tags) {
+                                            return (
+                                                <Tags tags={tags}/>
+                                            );
+                                        }
+                                    }
+                                })()}
                                 <AddTagForm parentDom={this.liRefs.current} data={results} id={item.id}/>       
                             </div>       
                         </div>
@@ -141,8 +135,8 @@ class List extends Component {
 
 function mapStateToProps(state) {
     return {
-        originalData: state.list.originalData,
-        nameFilter: state.list.nameFilter
+        tagsList: state.list.tagsList,
+        results: state.list.results
     }
 }
 
