@@ -16,30 +16,37 @@ export default (state = DEFAULT_STATE, action) => {
         case types.GET_LIST_OF_ALL_STUDENTS:
             return {...state, originalData: action.payload.data.students, results: action.payload.data.students};
 
+        // Add name filter to state
+        case types.ADD_NAME_FILTER_TO_STATE:
+            return {...state, nameFilter: action.payload};
+
+        // Add tag filter to state
+        case types.ADD_TAG_FILTER_TO_STATE:
+            return {...state, tagFilter: action.payload};    
+        
         // Filter data by name or tag   
-        case types.SEARCH_BY_FILTER:
-            console.log("action.payload: ", action.payload);
-            let nameFilter;
-            let tagFilter;
-            if (action.payload[0] === "name") {
-                nameFilter = action.payload[1].target.value;
-            } else {
-                tagFilter = action.payload[1].target.value;
-            }
-            
+        case types.SEARCH_BY_FILTERS:
             let results;
-            if (!state.nameFilter && !state.tagFilter) {
+            if (state.nameFilter) {
+                results = state.results.filter(student => 
+                    student.firstName.toLowerCase().includes(state.nameFilter) || student.lastName.toLowerCase().includes(state.nameFilter)
+                );
+            } else {
                 results = state.originalData;
             }
 
-            // if (nameFilter) {
-            //     nameResults = state.originalData.filter(student => 
-            //         student.firstName.toLowerCase().includes(nameFilter) || student.lastName.toLowerCase().includes(nameFilter)
-            //     );
-            // } else {
-            //     nameResults = state.originalData;
-            // }
-            return {...state, nameFilter: nameFilter, tagFilter: tagFilter, results: results};  
+            if (state.tagFilter) {
+                console.log("tagsList: ", state.tagsList);
+                const tagResults = state.tagsList.filter(tagObj => 
+                    tagObj.tags.includes(state.tagFilter)   
+                );
+                console.log("tagResults: ", tagResults);
+            }
+
+            if (!state.nameFilter && !state.tagFilter) {
+                results = state.originalData;
+            }
+            return {...state, results: results};  
 
         // Add a tag to a name. Check if tags exists for that name, make an array of objects, and add the tag to the tag array
         case types.ADD_TAG:

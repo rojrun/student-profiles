@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
-import {searchByFilter} from '../actions';
+import {addNameFilterToState, searchByFilters} from '../actions';
 import Input from './helpers/input.js';
 
 class SearchByNameForm extends Component {
     handleSearchName = (value) => {
-        const nameFilter = new Array("name", value);
-        this.props.searchByFilter(nameFilter);
+        this.props.addNameFilterToState(value);
+        this.props.searchByFilters();
     }
 
     render() {
@@ -20,7 +20,8 @@ class SearchByNameForm extends Component {
 }
 
 SearchByNameForm = connect(null, {
-    searchByFilter: searchByFilter,
+    addNameFilterToState: addNameFilterToState,
+    searchByFilters: searchByFilters
 })(SearchByNameForm);
 
 export default reduxForm({

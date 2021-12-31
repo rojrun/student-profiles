@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
-import {searchByFilter} from '../actions';
+import {addTagFilterToState, searchByFilters} from '../actions';
 import Input from './helpers/input.js';
 
 class SearchByTagForm extends Component {
     handleSearchTag = (value) => {
-        const tagFilter = new Array("tag", value);
-        this.props.searchByFilter(tagFilter);
+        this.props.addTagFilterToState(value);
+        this.props.searchByFilters();
     }
 
     render() {
@@ -20,7 +20,8 @@ class SearchByTagForm extends Component {
 }
 
 SearchByTagForm = connect(null, {
-    searchByFilter: searchByFilter,
+    addTagFilterToState: addTagFilterToState,
+    searchByFilters: searchByFilters
 })(SearchByTagForm);
 
 export default reduxForm({

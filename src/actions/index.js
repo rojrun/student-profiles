@@ -12,10 +12,25 @@ export function getAllStudents() {
     }
 }
 
-export function searchByFilter(filter) {
+export function addNameFilterToState(input) {
+    const filter = input.target.value;
     return {
-        type: types.SEARCH_BY_FILTER,
+        type: types.ADD_NAME_FILTER_TO_STATE,
         payload: filter
+    }
+}
+
+export function addTagFilterToState(input) {
+    const filter = input.target.value;
+    return {
+        type: types.ADD_TAG_FILTER_TO_STATE,
+        payload: filter
+    }
+}
+
+export function searchByFilters() {
+    return {
+        type: types.SEARCH_BY_FILTERS
     }
 }
 
