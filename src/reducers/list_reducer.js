@@ -27,22 +27,51 @@ export default (state = DEFAULT_STATE, action) => {
         // Filter data by name or tag   
         case types.SEARCH_BY_FILTERS:
             let results;
-            if (state.nameFilter) {
-                results = state.results.filter(student => 
+
+            // Search by name only
+            if (state.nameFilter && !state.tagFilter) {
+                results = state.originalData.filter(student => 
                     student.firstName.toLowerCase().includes(state.nameFilter) || student.lastName.toLowerCase().includes(state.nameFilter)
                 );
-            } else {
+            }
+
+            // Search by tag only
+            if (!state.nameFilter && state.tagFilter) {
+                if (state.tagsList) {
+                    const filtered = state.tagsList.filter(obj => !!obj.tags.find(t => t.includes(state.tagFilter)));
+                    results = state.originalData.filter(student => {
+                        return filtered.some(obj => {
+                            return student.id === obj.id;
+                        });
+                    });
+                } else {
+                    results = [];
+                }
+            }
+
+            // Search with both name and tag filters
+            if (state.nameFilter && state.tagFilter) {
                 results = state.originalData;
+                if (state.nameFilter) {
+                    results = state.results.filter(student => 
+                        student.firstName.toLowerCase().includes(state.nameFilter) || student.lastName.toLowerCase().includes(state.nameFilter)
+                    );
+                }
+                if (state.tagFilter) {
+                    if (state.tagsList) {
+                        const filtered = state.tagsList.filter(obj => !!obj.tags.find(t => t.includes(state.tagFilter)));
+                        results = state.results.filter(student => {
+                            return filtered.some(obj => {
+                                return student.id === obj.id;
+                            });
+                        });
+                    } else {
+                        results = [];
+                    }
+                }
             }
 
-            if (state.tagFilter) {
-                console.log("tagsList: ", state.tagsList);
-                const tagResults = state.tagsList.filter(tagObj => 
-                    tagObj.tags.includes(state.tagFilter)   
-                );
-                console.log("tagResults: ", tagResults);
-            }
-
+            // Both tags are empty
             if (!state.nameFilter && !state.tagFilter) {
                 results = state.originalData;
             }
