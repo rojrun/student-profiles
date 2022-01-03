@@ -6,6 +6,7 @@ const DEFAULT_STATE = {
     tagsList: null,
     tagExistsWarning: null,
     tagFilter: '', 
+    isNameFilterFirst: false,
     results: null
 };
 
@@ -26,57 +27,56 @@ export default (state = DEFAULT_STATE, action) => {
         
         // Filter data by name or tag   
         case types.SEARCH_BY_FILTERS:
+            let isNameFilterFirst = false;
             let results;
-
-            // Search by name only
-            if (state.nameFilter && !state.tagFilter) {
-                results = state.originalData.filter(student => 
+            const nameFilter = (array) => {
+                return array.filter(student => 
                     student.firstName.toLowerCase().includes(state.nameFilter) || student.lastName.toLowerCase().includes(state.nameFilter)
                 );
-            }
-
-            // Search by tag only
-            if (!state.nameFilter && state.tagFilter) {
+            };
+            const tagFilter = (array) => {
                 if (state.tagsList) {
                     const filtered = state.tagsList.filter(obj => !!obj.tags.find(t => t.includes(state.tagFilter)));
-                    results = state.originalData.filter(student => {
+                    return array.filter(student => {
                         return filtered.some(obj => {
                             return student.id === obj.id;
                         });
                     });
                 } else {
-                    results = [];
+                    return [];
                 }
+            };
+
+            // Search by name only
+            if (state.nameFilter && !state.tagFilter) {
+                results = nameFilter(state.originalData);
+                isNameFilterFirst = true;
+                return {...state, isNameFilterFirst: isNameFilterFirst, results: results}; 
+            }
+
+            // Search by tag only
+            if (!state.nameFilter && state.tagFilter) {
+                results = tagFilter(state.originalData);
+                return {...state, results: results};
             }
 
             // Search with both name and tag filters
             if (state.nameFilter && state.tagFilter) {
-                results = state.originalData;
-                if (state.nameFilter) {
-                    results = state.results.filter(student => 
-                        student.firstName.toLowerCase().includes(state.nameFilter) || student.lastName.toLowerCase().includes(state.nameFilter)
-                    );
-                }
-                if (state.tagFilter) {
-                    if (state.tagsList) {
-                        const filtered = state.tagsList.filter(obj => !!obj.tags.find(t => t.includes(state.tagFilter)));
-                        results = state.results.filter(student => {
-                            return filtered.some(obj => {
-                                return student.id === obj.id;
-                            });
-                        });
-                    } else {
-                        results = [];
+                if (state.isNameFilterFirst) {
+                    results = tagFilter(state.results);
+                } else {
+                    results = nameFilter(state.results);
                     }
-                }
+                return {...state, results: results};
             }
 
             // Both tags are empty
             if (!state.nameFilter && !state.tagFilter) {
                 results = state.originalData;
+                isNameFilterFirst = false;
+                return {...state, isNameFilterFirst: isNameFilterFirst, results: results};  
             }
-            return {...state, results: results};  
-
+            
         // Add a tag to a name. Check if tags exists for that name, make an array of objects, and add the tag to the tag array
         case types.ADD_TAG:
             const id = action.payload[0];

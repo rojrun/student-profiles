@@ -25,7 +25,7 @@ class List extends Component {
     }
 
     handleDisplayGrades = (data, id) => {
-        const collapsibleElement = document.getElementsByClassName("collapsible")[0].children[(data.findIndex(element => element.id === id))].getElementsByClassName("collapsible-body")[0];
+        const collapsibleElement = this.liRefs.current[data.findIndex(element => element.id === id)].getElementsByClassName("collapsible-body")[0];
         if (this.state.isOpen.includes(id)) {
             collapsibleElement.style.display= "none";
             const arrayCopy = [...this.state.isOpen];
@@ -59,7 +59,7 @@ class List extends Component {
         
         const listElements = results.map((item) => {
             return (
-                <li className="collection-item" key={item.id} ref={addToRefs}>
+                <li className="collapsible card col s12 m6 l4" key={item.id} ref={addToRefs}>
                     <section>
                         <div className="collapsible-header row">
                             <div className="col s3">
@@ -116,10 +116,8 @@ class List extends Component {
         });
 
         return (
-            <ul className="collection">
-                <div className="collapsible">
-                    {listElements}
-                </div>
+            <ul className="row">
+                {listElements}
             </ul>
         );
     }
