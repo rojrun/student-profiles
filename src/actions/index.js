@@ -12,10 +12,32 @@ export function getAllStudents() {
     }
 }
 
-export function searchByName(text) {
-    const value = text.target.value;
+export function addNameFilterToState(input) {
+    const filter = input.target.value;
     return {
-        type: types.SEARCH_BY_NAME,
-        payload: value
+        type: types.ADD_NAME_FILTER_TO_STATE,
+        payload: filter
+    }
+}
+
+export function addTagFilterToState(input) {
+    const filter = input.target.value;
+    return {
+        type: types.ADD_TAG_FILTER_TO_STATE,
+        payload: filter
+    }
+}
+
+export function searchByFilters() {
+    return {
+        type: types.SEARCH_BY_FILTERS
+    }
+}
+
+export function addTag(id, tag) {
+    const idAndTag = new Array(id, tag);
+    return {
+        type: types.ADD_TAG,
+        payload: idAndTag
     }
 }
