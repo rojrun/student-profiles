@@ -12,6 +12,13 @@ export function getAllStudents() {
     }
 }
 
+export function addRef(ref) {
+    return {
+        type: types.ADD_REF,
+        payload: ref
+    }
+}
+
 export function addNameFilterToState(input) {
     const filter = input.target.value;
     return {
@@ -39,5 +46,19 @@ export function addTag(id, tag) {
     return {
         type: types.ADD_TAG,
         payload: idAndTag
+    }
+}
+
+export function addIdToIsOpen(id) {
+    return {
+        type: types.ADD_ID_TO_IS_OPEN,
+        payload: id
+    }
+}
+
+export function removeIdFromIsOpen(id) {
+    return {
+        type: types.REMOVE_ID_FROM_IS_OPEN,
+        payload: id
     }
 }

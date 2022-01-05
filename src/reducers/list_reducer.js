@@ -7,7 +7,9 @@ const DEFAULT_STATE = {
     tagExistsWarning: null,
     tagFilter: '', 
     isNameFilterFirst: false,
-    results: null
+    results: null, 
+    isOpen: [],
+    ref: null
 };
 
 export default (state = DEFAULT_STATE, action) => {
@@ -17,6 +19,10 @@ export default (state = DEFAULT_STATE, action) => {
         case types.GET_LIST_OF_ALL_STUDENTS:
             return {...state, originalData: action.payload.data.students, results: action.payload.data.students};
 
+        // Add ref from list component
+        case types.ADD_REF:
+            return {...state, ref: action.payload};
+        
         // Add name filter to state
         case types.ADD_NAME_FILTER_TO_STATE:
             return {...state, nameFilter: action.payload};
@@ -120,6 +126,21 @@ export default (state = DEFAULT_STATE, action) => {
                     return {...state, tagsList: newTagsListWithNewIdObj};
                 }
             }
+
+        // Add id to isOpen
+        case types.ADD_ID_TO_IS_OPEN:
+            const convertIdToArray = new Array(action.payload);
+            const newIsOpen = state.isOpen.concat(convertIdToArray);
+            return {...state, isOpen: newIsOpen};
+
+        // Remove id from isOpen
+        case types.REMOVE_ID_FROM_IS_OPEN:
+            const isOpenCopy = [...state.isOpen];
+            const idIndex = isOpenCopy.indexOf(action.payload);
+            if (idIndex > -1) {
+                isOpenCopy.splice(idIndex, 1);
+                return {...state, isOpen: isOpenCopy};
+            }   
 
         default:
             return state;

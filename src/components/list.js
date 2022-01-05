@@ -1,15 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getAllStudents} from '../actions';
+import {getAllStudents, addRef, addIdToIsOpen, removeIdFromIsOpen} from '../actions';
 import Tags from './tags';
 import AddTagForm from './add_tag_form';
 
 class List extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            isOpen: []
-        }
         this.liRefs = React.createRef();
     }
     
@@ -21,22 +18,18 @@ class List extends Component {
     componentDidUpdate(prevProps) {
         if (prevProps.results !== this.props.results.length) {
             this.instance = M.Collapsible.init(this.collapsible);
+            this.props.addRef(this.liRefs.current);
         }
     }
 
     handleDisplayGrades = (data, id) => {
         const collapsibleElement = this.liRefs.current[data.findIndex(element => element.id === id)].getElementsByClassName("collapsible-body")[0];
-        if (this.state.isOpen.includes(id)) {
-            collapsibleElement.style.display= "none";
-            const arrayCopy = [...this.state.isOpen];
-            const elIndex = arrayCopy.indexOf(id);
-            if (elIndex > -1) {
-                arrayCopy.splice(elIndex, 1);
-                this.setState({isOpen: arrayCopy});
-            }
+        if (this.props.isOpen.includes(id)) {
+            collapsibleElement.style.display = "none";
+            this.props.removeIdFromIsOpen(id);
         } else {
             collapsibleElement.style.display = "block";
-            this.setState({isOpen: [...this.state.isOpen, id]});     
+            this.props.addIdToIsOpen(id); 
         }     
     }
 
@@ -58,24 +51,25 @@ class List extends Component {
         }
         
         const listElements = results.map((item) => {
+            const {id, pic, firstName, lastName, email, company, skill, grades} = item;
             return (
-                <li className="collapsible card col s12 m6 l4" key={item.id} ref={addToRefs}>
+                <li className="collapsible card col s12 m6" key={id} ref={addToRefs}>
                     <section>
                         <div className="collapsible-header row">
                             <div className="col s3">
-                                <img src={item.pic} alt="student avatar"/>
+                                <img src={pic} alt="student avatar"/>
                             </div>
                             <div className="col s9">
                                 <div className="row">
-                                    <p className="col s9">{item.firstName + " " + item.lastName}</p>
-                                    <button className="col s3" onClick={() => this.handleDisplayGrades(results, item.id)}>
-                                        {this.state.isOpen.includes(item.id) ? <span>&#8722;</span> : <span>&#43;</span>}
+                                    <p className="col s9">{firstName + " " + lastName}</p>
+                                    <button className="col s3" onClick={() => this.handleDisplayGrades(results, id)}>
+                                        {this.props.isOpen.includes(id) ? <span>&#8722;</span> : <span>&#43;</span>}
                                     </button>
                                 </div>
-                                <p>Email: {item.email}</p>
-                                <p>Company: {item.company}</p>
-                                <p>Skill: {item.skill}</p>
-                                <p>Average: {(eval(item.grades.join("+"))/item.grades.length) + "%"}</p>
+                                <p>Email: {email}</p>
+                                <p>Company: {company}</p>
+                                <p>Skill: {skill}</p>
+                                <p>Average: {(eval(grades.join("+"))/grades.length) + "%"}</p>
                             </div>
                         </div>
                         <div ref={(element) => this.collapsible = element} className="collapsible-body row">
@@ -83,7 +77,7 @@ class List extends Component {
                             <div className="col s9">
                                 <ul>
                                     {
-                                        item.grades.map((score, index) => {
+                                        grades.map((score, index) => {
                                             return (
                                                 <li key={index}>
                                                     <p>Test {index + 1}:&emsp;{score}%</p>
@@ -99,7 +93,7 @@ class List extends Component {
                             <div className="col s9">
                                 {(() => {
                                     if (tagsList) {
-                                        const tags = tagsList.find(tagObj => tagObj.id === item.id);
+                                        const tags = tagsList.find(tagObj => tagObj.id === id);
                                         if (tags) {
                                             return (
                                                 <Tags tags={tags}/>
@@ -107,7 +101,7 @@ class List extends Component {
                                         }
                                     }
                                 })()}
-                                <AddTagForm parentDom={this.liRefs.current} data={results} id={item.id}/>       
+                                <AddTagForm parentDom={this.liRefs.current} data={results} id={id}/>       
                             </div>       
                         </div>
                     </section>
@@ -134,10 +128,14 @@ class List extends Component {
 function mapStateToProps(state) {
     return {
         tagsList: state.list.tagsList,
-        results: state.list.results
+        results: state.list.results,
+        isOpen: state.list.isOpen
     }
 }
 
 export default connect(mapStateToProps, {
     getAllStudents: getAllStudents,
+    addRef: addRef,
+    addIdToIsOpen: addIdToIsOpen,
+    removeIdFromIsOpen: removeIdFromIsOpen
 })(List);
