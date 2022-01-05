@@ -17,7 +17,7 @@ class AddTagForm extends Component {
         return (
             <div className="row">
                 <form onSubmit={handleSubmit(() => this.handleAddTag(id, data))}>
-                    <Field name={`addTag${id}`} label="Add a tag" size="col s12 m8" type="text" component={Input} liRefs={parentDom}
+                    <Field name={`addTag${id}`} label="Add a tag" size="col s10 m8" type="text" component={Input} liRefs={parentDom}
                         id={`addTag${id}`} data={data} warning={tagExistsWarning}/>
                 </form>
             </div>
