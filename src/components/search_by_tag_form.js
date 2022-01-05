@@ -13,7 +13,7 @@ class SearchByTagForm extends Component {
     render() {
         return (
             <div className="row">
-                <Field name="searchByTag" size="col s12 m8 offset-m2" component={Input} id="searchByTag" label="Search by tag" type="text" onChange={this.handleSearchTag}/>
+                <Field name="searchByTag" size="col s12 m6 offset-m3" component={Input} id="searchByTag" label="Search by tag" type="text" onChange={this.handleSearchTag}/>
             </div>
         );
     }
