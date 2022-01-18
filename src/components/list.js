@@ -53,7 +53,7 @@ class List extends Component {
         const listElements = results.map((item) => {
             const {id, pic, firstName, lastName, email, company, skill, grades} = item;
             return (
-                <li className="collapsible card col s12 m6" key={id} ref={addToRefs}>
+                <li className="collapsible card col s12" key={id} ref={addToRefs}>
                     <section>
                         <div className="collapsible-header row">
                             <div className="col s3">
@@ -72,7 +72,7 @@ class List extends Component {
                                 <p>Average: {(eval(grades.join("+"))/grades.length) + "%"}</p>
                             </div>
                         </div>
-                        <div ref={(element) => this.collapsible = element} className="collapsible-body row">
+                        <div className="collapsible-body row">
                             <div className="col s3"></div>
                             <div className="col s9">
                                 <ul>
