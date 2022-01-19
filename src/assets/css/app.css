@@ -4,9 +4,12 @@
 }
 
 :root {
-	--bg: #bf3329;
-	--h1: #f1e0c2;
-	--input: #20242d;
+	--bg: #90cfe4;
+	--text: #020360;
+	--accent: #bfc1c5;
+	--odd: #f38251;
+	--even: #c10100;
+	--imgbg: #fffff0;
 }
 
 * {
@@ -15,77 +18,148 @@
 
 body {
 	background-color: var(--bg);
+	/* background-image: url(../../../dist/cap_icon.png);
+	background-repeat: round;
+	background-size: calc(3.75vw + 38.74px); */
 }
 
+/*-- title --*/
 h1 {
 	font-size: calc(2.53vw + 27.40px);
-	color: var(--h1);
+	color: var(--text);
 }
 
-.input-field input[type="text"] {
-	border-bottom-color: var(--input);
+/*-- No Students Available --*/
+h5 {
+	color: var(--text);
+}
+
+/*-- search inputs --*/
+.input-field input[type="text"], .input-field input[type="text"]:not(.brower-default):focus:not([readonly]) {
+	border-bottom-color: var(--text);
+	box-shadow: none;
 	margin-bottom: 0;
 }
 
-.input-field label {
-	color: var(--input);
+.input-field label, .input-field input[type="text"]:not(.brower-default):focus:not([readonly])+label {
+	color: var(--text);
 }
 
+/*-- open/close buttons --*/
 div.row.right-align > button:nth-child(2) {
 	margin-left: 1em;
 }
 
-.collapsible-header, .collapsible-body {
-	border-bottom: none;
+.btn, .btn:focus {
+	background-color: var(--text);
+	color: var(--accent);
 }
 
-.collapsible-body, section > div:nth-child(3) {
-	padding: 1rem;
+.btn:hover {
+	background-color: var(--accent);
+	color: var(--text);
 }
 
-.collapsible-header, .collapsible-body, section > div:nth-child(3) {
-	margin-bottom: 0;
+/*-- ul.collapsible --*/
+.collapsible {
+	border: none;
+	margin: none;
+	box-shadow: none;
+	-webkit-box-shadow: none;
 }
 
-section > div:first-child > div:first-child {
+/*-- li.card --*/
+.card {
+	padding-top: 1rem;
+	box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+	-webkit-box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+}
+
+.card:nth-child(odd) > .collapsible-header, .card:nth-child(odd) {
+	background-color: var(--odd);
+}
+
+.card:nth-child(even) > .collapsible-header, .card:nth-child(even) {
+	background-color: var(--even);
+}
+
+/*-- img area --*/
+.collapsible-header > div:first-child {
 	padding: 0;
 }
 
-section > div:first-child > div:first-child > img {
+.collapsible-header > div:first-child > img {
+	background-color: var(--imgbg);
 	border: 1px solid black; 
 	border-radius: 50%;
+	image-rendering: pixelated;
 	width: 100%;
 }
 
-section > div:first-child > div:nth-child(2) > div:first-child > p {
-	font-size: calc(0.75vw + 21.75px);
+/*-- collapsible-header --*/
+.collapsible-header > div:nth-child(2) > div:first-child {
+	margin-bottom: 0;
+}
+
+.collapsible-header > div:nth-child(2) > div:first-child > p {
+	font-size: calc(2.35vw + 12.96px);
 	font-weight: 900;
 }
 
-section > div:first-child > div:nth-child(2) > div:first-child > button {
+.collapsible-header > div:nth-child(2) > div:first-child > button {
 	border: none;
 	background: none;
 }
 
-section > div:first-child > div:nth-child(2) > div:first-child > button > span {
-	font-size: calc(0.56vw + 32.31px);
+.collapsible-header > div:nth-child(2) > div:first-child > button > span {
+	color: var(--text);
+	font-size: calc(3.28vw + 19.15px);
 }
 
-section p {
-	margin: 0;
-}
-
-section > div:nth-child(3) > div:nth-child(2) > ul {
+/*-- tag area --*/
+.card > div:nth-child(3) > div:nth-child(2) > ul {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0.8rem;
 }
 
-section > div:nth-child(3) > div:nth-child(2) > ul p {
+.card > div:nth-child(3) > div:nth-child(2) > ul p {
 	border: 1px solid black;
 	padding: 0.5rem 1rem;
 }
 
-section > div:nth-child(3) > div:nth-child(2) > div {
+.card > div:nth-child(3) > div:nth-child(2) > div {
 	margin-top: 0.8rem;
+}
+
+/*-- common areas --*/
+.collapsible-header, .collapsible-body {
+	border-bottom: none;
+}
+
+.collapsible-body, .card > div:nth-child(3) {
+	padding: 1rem;
+}
+
+.collapsible-header, .collapsible-body, .card > div:nth-child(3) {
+	margin-bottom: 0;
+}
+
+.card p {
+	color: var(--text);
+	font-size: calc(0.66vw + 12.03px);
+	margin: 0;
+	overflow-wrap: break-word;
+}
+
+div.row.right-align > button,
+.card > div:nth-child(3) > div:nth-child(2) > ul p {
+	border-radius: 0.4rem;
+}
+
+@media screen and (min-width: 601px) {
+	.card {
+		padding-left: calc(9.38vw - 28.14px);
+		padding-right: calc(9.38vw - 28.14px);
+	}
 }
