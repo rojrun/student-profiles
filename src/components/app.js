@@ -5,6 +5,7 @@ import SearchByNameForm from './search_by_name_form';
 import SearchByTagForm from './search_by_tag_form';
 import ButtonsGroup from './buttons_group';
 import List from './list';
+import '../assets/css/app.css';
 
 const App = () => (
     <div className="container">

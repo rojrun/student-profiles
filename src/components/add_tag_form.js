@@ -32,7 +32,7 @@ function mapStateToProps(state) {
 }
 
 AddTagForm = connect(mapStateToProps, {
-    addTag: addTag,
+    addTag: addTag
 })(AddTagForm);
 
 export default reduxForm({
