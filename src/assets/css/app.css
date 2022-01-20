@@ -4,12 +4,12 @@
 }
 
 :root {
-	--bg: #90cfe4;
-	--text: #020360;
-	--accent: #bfc1c5;
-	--odd: #f38251;
-	--even: #c10100;
-	--imgbg: #fffff0;
+	--bg: #01345B;
+	--text: #ffffff;
+	--accent: #363538;
+	--odd: #FFCF43;
+	--even: #5CE0D8;
+	--imgbg: #ffffff;
 }
 
 * {
@@ -18,34 +18,35 @@
 
 body {
 	background-color: var(--bg);
-	/* background-image: url(../../../dist/cap_icon.png);
+	background-image: url(../../../dist/cap_bg.png);
 	background-repeat: round;
-	background-size: calc(3.75vw + 38.74px); */
+	background-size: calc(3.75vw + 38.74px);
 }
 
-/*-- title --*/
+/*----------- title -----------*/
 h1 {
 	font-size: calc(2.53vw + 27.40px);
 	color: var(--text);
 }
 
-/*-- No Students Available --*/
+/*----------- No Students Available -----------*/
 h5 {
 	color: var(--text);
 }
 
-/*-- search inputs --*/
-.input-field input[type="text"], .input-field input[type="text"]:not(.brower-default):focus:not([readonly]) {
+/*----------- search inputs -----------*/
+.container .row > div:first-child > div:first-child > input[name^="searchBy"], 
+input[type="text"]:not(.brower-default):focus:not([readonly]) {
 	border-bottom-color: var(--text);
-	box-shadow: none;
-	margin-bottom: 0;
 }
 
-.input-field label, .input-field input[type="text"]:not(.brower-default):focus:not([readonly])+label {
+input[name^="searchBy"] + label, 
+input[type="text"], 
+input[type="text"]:not(.brower-default):focus:not([readonly]) + label {
 	color: var(--text);
 }
 
-/*-- open/close buttons --*/
+/*----------- open/close buttons -----------*/
 div.row.right-align > button:nth-child(2) {
 	margin-left: 1em;
 }
@@ -60,7 +61,7 @@ div.row.right-align > button:nth-child(2) {
 	color: var(--text);
 }
 
-/*-- ul.collapsible --*/
+/*----------- ul.collapsible -----------*/
 .collapsible {
 	border: none;
 	margin: none;
@@ -68,7 +69,7 @@ div.row.right-align > button:nth-child(2) {
 	-webkit-box-shadow: none;
 }
 
-/*-- li.card --*/
+/*----------- li.card -----------*/
 .card {
 	padding-top: 1rem;
 	box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
@@ -83,7 +84,7 @@ div.row.right-align > button:nth-child(2) {
 	background-color: var(--even);
 }
 
-/*-- img area --*/
+/*----------- img area -----------*/
 .collapsible-header > div:first-child {
 	padding: 0;
 }
@@ -96,7 +97,7 @@ div.row.right-align > button:nth-child(2) {
 	width: 100%;
 }
 
-/*-- collapsible-header --*/
+/*----------- collapsible-header -----------*/
 .collapsible-header > div:nth-child(2) > div:first-child {
 	margin-bottom: 0;
 }
@@ -112,11 +113,10 @@ div.row.right-align > button:nth-child(2) {
 }
 
 .collapsible-header > div:nth-child(2) > div:first-child > button > span {
-	color: var(--text);
+	color: var(--bg);
 	font-size: calc(3.28vw + 19.15px);
 }
 
-/*-- tag area --*/
 .card > div:nth-child(3) > div:nth-child(2) > ul {
 	display: flex;
 	flex-wrap: wrap;
@@ -124,32 +124,51 @@ div.row.right-align > button:nth-child(2) {
 }
 
 .card > div:nth-child(3) > div:nth-child(2) > ul p {
-	border: 1px solid black;
-	padding: 0.5rem 1rem;
+	border: 1px solid var(--bg);
+	padding: 0.4rem 0.9rem;
 }
 
 .card > div:nth-child(3) > div:nth-child(2) > div {
 	margin-top: 0.8rem;
 }
 
-/*-- common areas --*/
-.collapsible-header, .collapsible-body {
-	border-bottom: none;
+/*----------- tag area -----------*/
+form > div:first-child > .input-field > label, 
+form > div:first-child > .input-field > input[type="text"], 
+form > div:first-child > .input-field > input[type="text"]:not(.brower-default):focus:not([readonly]) + label {
+	color: var(--bg);
 }
 
-.collapsible-body, .card > div:nth-child(3) {
-	padding: 1rem;
+form > div:first-child > .input-field > input[type="text"], 
+form > div:first-child > .input-field > input[type="text"]:not(.brower-default):focus:not([readonly]) {
+	border-bottom-color: var(--bg);
+}	
+
+/*----------- common styling -----------*/
+.input-field input[type="text"],
+.input-field input[type="text"]:not(.brower-default):focus:not([readonly]) {
+	box-shadow: none;
+	margin-bottom: 0;
 }
+
+.collapsible-header, .collapsible-body {
+	border-bottom: none;
+} 
 
 .collapsible-header, .collapsible-body, .card > div:nth-child(3) {
 	margin-bottom: 0;
 }
 
 .card p {
-	color: var(--text);
+	color: var(--bg);
 	font-size: calc(0.66vw + 12.03px);
 	margin: 0;
 	overflow-wrap: break-word;
+}
+
+/*-- collapsible-body & tag area --*/
+.collapsible-body, .card > div:nth-child(3) {
+	padding: 0 1rem 1rem 1rem;
 }
 
 div.row.right-align > button,
