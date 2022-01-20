@@ -53,64 +53,62 @@ class List extends Component {
         const listElements = results.map((item) => {
             const {id, pic, firstName, lastName, email, company, skill, grades} = item;
             return (
-                <li className="collapsible card col s12 m6" key={id} ref={addToRefs}>
-                    <section>
-                        <div className="collapsible-header row">
-                            <div className="col s3">
-                                <img src={pic} alt="student avatar"/>
-                            </div>
-                            <div className="col s9">
-                                <div className="row">
-                                    <p className="col s9">{firstName + " " + lastName}</p>
-                                    <button className="col s3" onClick={() => this.handleDisplayGrades(results, id)}>
-                                        {this.props.isOpen.includes(id) ? <span>&#8722;</span> : <span>&#43;</span>}
-                                    </button>
-                                </div>
-                                <p>Email: {email}</p>
-                                <p>Company: {company}</p>
-                                <p>Skill: {skill}</p>
-                                <p>Average: {(eval(grades.join("+"))/grades.length) + "%"}</p>
-                            </div>
+                <li className="card" key={id} ref={addToRefs}>
+                    <div className="collapsible-header row">
+                        <div className="col s3">
+                            <img src={pic} alt="student avatar"/>
                         </div>
-                        <div ref={(element) => this.collapsible = element} className="collapsible-body row">
-                            <div className="col s3"></div>
-                            <div className="col s9">
-                                <ul>
-                                    {
-                                        grades.map((score, index) => {
-                                            return (
-                                                <li key={index}>
-                                                    <p>Test {index + 1}:&emsp;{score}%</p>
-                                                </li>
-                                            );
-                                        })
+                        <div className="col s9">
+                            <div className="row">
+                                <p className="col s9">{firstName + " " + lastName}</p>
+                                <button className="col s3 right-align" onClick={() => this.handleDisplayGrades(results, id)}>
+                                    {this.props.isOpen.includes(id) ? <span>&#8722;</span> : <span>&#43;</span>}
+                                </button>
+                            </div>
+                            <p>Email: {email}</p>
+                            <p>Company: {company}</p>
+                            <p>Skill: {skill}</p>
+                            <p>Average: {(eval(grades.join("+"))/grades.length) + "%"}</p>
+                        </div>
+                    </div>
+                    <div className="collapsible-body row">
+                        <div className="col s3"></div>
+                        <div className="col s9">
+                            <ul>
+                                {
+                                    grades.map((score, index) => {
+                                        return (
+                                            <li key={index}>
+                                                <p>Test {index + 1}:&emsp;{score}%</p>
+                                            </li>
+                                        );
+                                    })
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col s3"></div>    
+                        <div className="col s9">
+                            {(() => {
+                                if (tagsList) {
+                                    const tags = tagsList.find(tagObj => tagObj.id === id);
+                                    if (tags) {
+                                        return (
+                                            <Tags tags={tags}/>
+                                        );
                                     }
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col s3"></div>    
-                            <div className="col s9">
-                                {(() => {
-                                    if (tagsList) {
-                                        const tags = tagsList.find(tagObj => tagObj.id === id);
-                                        if (tags) {
-                                            return (
-                                                <Tags tags={tags}/>
-                                            );
-                                        }
-                                    }
-                                })()}
-                                <AddTagForm parentDom={this.liRefs.current} data={results} id={id}/>       
-                            </div>       
-                        </div>
-                    </section>
+                                }
+                            })()}
+                            <AddTagForm parentDom={this.liRefs.current} data={results} id={id}/>       
+                        </div>       
+                    </div>
                 </li>
             );
         });
 
         return (
-            <ul className="row">
+            <ul className="collapsible">
                 {listElements}
             </ul>
         );

@@ -5,9 +5,9 @@ const Input = props => {
         const dataIndex = props.data.findIndex(el => el.id === props.warning[0]);
         const node = props.liRefs[dataIndex].getElementsByTagName("form")[0].getElementsByTagName("p")[0];
         node.innerHTML = props.warning[1];
-        setTimeout(() => {
-            node.innerHTML = "";
-        }, 4000);
+        // setTimeout(() => {
+        //     node.innerHTML = "";
+        // }, 4000);
     }   
 
     return (
@@ -16,7 +16,7 @@ const Input = props => {
                 <input {...props.input} id={props.id} type={props.type} autoComplete="off"/>
                 <label htmlFor={props.id}>{props.label}</label>
             </div>
-            <p className="red-text text-darken-2"></p>
+            <p className="red-text text-darken-4"></p>
         </div>
     );
 };
