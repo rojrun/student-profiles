@@ -100,7 +100,7 @@ class List extends Component {
                                     }
                                 }
                             })()}
-                            <AddTagForm parentDom={this.liRefs.current} data={results} id={id}/>       
+                            <AddTagForm parentDom={this.liRefs.current} tagsList={tagsList} data={results} id={id}/>       
                         </div>       
                     </div>
                 </li>

@@ -41,12 +41,18 @@ export function searchByFilters() {
     }
 }
 
-export function addTag(id, tag) {
-    const idAndTag = new Array(id, tag);
+// export function addTag(id, tag) {
+//     const idAndTag = new Array(id, tag);
+//     return {
+//         type: types.ADD_TAG,
+//         payload: idAndTag
+//     }
+// }
+export function addTag(tag) {
     return {
         type: types.ADD_TAG,
-        payload: idAndTag
-    }
+        payload: tag
+    };
 }
 
 export function addIdToIsOpen(id) {
