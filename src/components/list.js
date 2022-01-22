@@ -34,7 +34,7 @@ class List extends Component {
     }
 
     renderList() {
-        const {tagsList, results} = this.props;
+        const {tagsList, results, isOpen} = this.props;
         this.liRefs.current = [];
         const addToRefs = (el) => {
             if (el && !this.liRefs.current.includes(el)) {
@@ -59,10 +59,10 @@ class List extends Component {
                             <img src={pic} alt="student avatar"/>
                         </div>
                         <div className="col s9">
-                            <div className="row">
-                                <p className="col s9">{firstName + " " + lastName}</p>
-                                <button className="col s3 right-align" onClick={() => this.handleDisplayGrades(results, id)}>
-                                    {this.props.isOpen.includes(id) ? <span>&#8722;</span> : <span>&#43;</span>}
+                            <div className="">
+                                <p className="">{firstName + " " + lastName}</p>
+                                <button className="" onClick={() => this.handleDisplayGrades(results, id)}>
+                                    {isOpen.includes(id) ? <span>&#8722;</span> : <span>&#43;</span>}
                                 </button>
                             </div>
                             <p>Email: {email}</p>
@@ -100,7 +100,7 @@ class List extends Component {
                                     }
                                 }
                             })()}
-                            <AddTagForm parentDom={this.liRefs.current} data={results} id={id}/>       
+                            <AddTagForm parentDom={this.liRefs.current} tagsList={tagsList} data={results} id={id}/>       
                         </div>       
                     </div>
                 </li>
