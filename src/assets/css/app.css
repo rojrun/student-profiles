@@ -46,7 +46,7 @@ input[type="text"]:not(.brower-default):focus:not([readonly]) + label {
 	color: var(--text);
 }
 
-/*----------- open/close buttons -----------*/
+/*----------- open/close all buttons -----------*/
 div.row.right-align > button:nth-child(2) {
 	margin-left: 1em;
 }
@@ -86,7 +86,7 @@ div.row.right-align > button:nth-child(2) {
 
 /*----------- img area -----------*/
 .collapsible-header > div:first-child {
-	padding: 0;
+	padding: 0 0 0 0.75rem;
 }
 
 .collapsible-header > div:first-child > img {
@@ -99,22 +99,34 @@ div.row.right-align > button:nth-child(2) {
 
 /*----------- collapsible-header -----------*/
 .collapsible-header > div:nth-child(2) > div:first-child {
+	display: flex;
+	justify-content: space-between;
 	margin-bottom: 0;
 }
 
 .collapsible-header > div:nth-child(2) > div:first-child > p {
 	font-size: calc(2.35vw + 12.96px);
 	font-weight: 900;
+	word-break: break-word;
 }
 
 .collapsible-header > div:nth-child(2) > div:first-child > button {
-	border: none;
 	background: none;
+	border: none;
+	color: var(--bg);
+	font-size: calc(7.04vw + 31.89px);
+	line-height: 0.5;
+	padding: 0;
+	text-align: center;
+	position: relative;
+	width: calc(2.44vw + 24.68px);
 }
 
 .collapsible-header > div:nth-child(2) > div:first-child > button > span {
-	color: var(--bg);
-	font-size: calc(3.28vw + 19.15px);
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 0;
 }
 
 .card > div:nth-child(3) > div:nth-child(2) > ul {
