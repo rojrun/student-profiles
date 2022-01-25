@@ -18,7 +18,7 @@
 
 body {
 	background-color: var(--bg);
-	background-image: url(../../../dist/cap_bg.png);
+	background-image: url(../images/cap_bg.png);
 	background-repeat: round;
 	background-size: calc(3.75vw + 38.74px);
 }
