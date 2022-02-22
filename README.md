@@ -6,7 +6,7 @@
 
 > 1. Fork this repo
 > 1. Clone your forked copy of this repo
->    - `git clone https://github.com/{username}/student-profile-3213.git student_profiles`
+>    - `git clone https://github.com/{username}/student-profiles.git student_profiles`
 > 1. Change directory into the newly cloned repo
 >    - `cd student_profiles`
 > 1. Install dependencies 
